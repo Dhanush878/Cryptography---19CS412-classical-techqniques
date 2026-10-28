@@ -125,3 +125,99 @@ Key text: Monarchy Plain text: instruments Cipher text: gatlmzclrqtx
 
 ## RESULT:
 The program is executed successfully
+
+# Hill Cipher
+Hill Cipher using with different key values
+
+# AIM:
+
+To develop a simple C program to implement Hill Cipher.
+
+## DESIGN STEPS:
+
+### Step 1:
+
+Design of Hill Cipher algorithnm 
+
+### Step 2:
+
+Implementation using C or pyhton code
+
+### Step 3:
+
+Testing algorithm with different key values. 
+ALGORITHM DESCRIPTION:
+The Hill cipher is a substitution cipher invented by Lester S. Hill in 1929. Each letter is represented by a number modulo 26. To encrypt a message, each block of n letters is multiplied by an invertible n × n matrix, again modulus 26.
+To decrypt the message, each block is multiplied by the inverse of the matrix used for encryption. The matrix used for encryption is the cipher key, and it should be chosen randomly from the set of invertible n × n matrices (modulo 26).
+The cipher can, be adapted to an alphabet with any number of letters. All arithmetic just needs to be done modulo the number of letters instead of modulo 26.
+
+
+## PROGRAM:
+```
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main()
+{
+    char msg[100], enc[100], dec[100];
+    int a = 3, b = 3, c = 2, d = 5;
+    int i, x, y, len;
+    int inv = 5;  // Inverse of determinant 9 modulo 26
+
+    printf("Input Message: ");
+    scanf("%99s", msg);
+
+    len = strlen(msg);
+
+    for (i = 0; i < len; i++)
+        msg[i] = toupper(msg[i]);
+
+    if (len % 2 != 0)
+    {
+        msg[len++] = 'X';
+        msg[len] = '\0';
+    }
+
+    printf("Padded Message: %s\n", msg);
+
+    for (i = 0; i < len; i += 2)
+    {
+        x = msg[i] - 'A';
+        y = msg[i + 1] - 'A';
+
+        enc[i]     = ((a * x + b * y) % 26) + 'A';
+        enc[i + 1] = ((c * x + d * y) % 26) + 'A';
+    }
+    enc[len] = '\0';
+
+    printf("Encrypted Message: %s\n", enc);
+
+    for (i = 0; i < len; i += 2)
+    {
+        x = enc[i] - 'A';
+        y = enc[i + 1] - 'A';
+
+        dec[i] = ((inv * (d * x - b * y + 2600)) % 26);
+        dec[i + 1] = ((inv * (-c * x + a * y + 2600)) % 26);
+
+        dec[i] += 'A';
+        dec[i + 1] += 'A';
+    }
+    dec[len] = '\0';
+
+    printf("Decrypted Message: %s\n", dec);
+
+    return 0;
+}
+```
+
+## OUTPUT:
+<img width="1917" height="797" alt="image" src="https://github.com/user-attachments/assets/76955323-e088-4eda-8492-78b90e678b70" />
+
+
+Input Message : SecurityLaboratory
+Padded Message : SECURITYLABORATORY Encrypted Message : EACSDKLCAEFQDUKSXU Decrypted Message : SECURITYLABORATORY
+## RESULT:
+The program is executed successfully
+
